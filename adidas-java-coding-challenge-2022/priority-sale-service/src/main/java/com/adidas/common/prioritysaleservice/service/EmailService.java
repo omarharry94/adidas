@@ -6,6 +6,7 @@ import com.adidas.common.prioritysaleservice.config.EmailServiceConfigProperties
 import com.adidas.common.prioritysaleservice.constant.Comparators;
 import com.adidas.common.service.RestService;
 import com.adidas.common.service.impl.RestServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -17,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
+@Slf4j
 @Component
 @EnableAsync
 public class EmailService {
@@ -47,6 +49,7 @@ public class EmailService {
     @Async
     public void sendEmailToWinner() throws InterruptedException {
         if (!priorityBlockingQueue.isEmpty()){
+            log.info("Sending email request");
             AdiClubMemberInfoDto take = this.priorityBlockingQueue.take();
             MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
             parameters.add("emailAddress", take.getEmail());
