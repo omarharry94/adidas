@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.adidas.common.publicservice.controller.DummyRestController;
-
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = DummyRestController.class)
 class DummyRestControllerTests {

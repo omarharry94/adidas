@@ -4,10 +4,9 @@ package com.adidas.common.prioritysaleservice.service;
 import com.adidas.common.dto.AdiClubMemberInfoDto;
 import com.adidas.common.prioritysaleservice.config.EmailServiceConfigProperties;
 import com.adidas.common.prioritysaleservice.constant.Comparators;
-import com.adidas.common.service.RestService;
-import com.adidas.common.service.impl.RestServiceImpl;
+import com.adidas.common.utils.RestService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,28 +15,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.PriorityBlockingQueue;
 
 @Slf4j
 @Component
 @EnableAsync
+@RequiredArgsConstructor
 public class EmailService {
-    private static final RestService restService = new RestServiceImpl();
-    private final PriorityBlockingQueue<AdiClubMemberInfoDto> priorityBlockingQueue;
+
     private final EmailServiceConfigProperties emailServiceConfigProperties;
 
+    private PriorityBlockingQueue<AdiClubMemberInfoDto> priorityBlockingQueue;
+    @Value("${spring.async.queue-capacity}")
+    private int queueSize;
 
-    @Autowired
-    public EmailService(@Autowired EmailServiceConfigProperties emailServiceConfigProperties,
-                        @Value("${spring.async.queue-capacity}") int queueSize) {
-
-        this(new PriorityBlockingQueue<>(queueSize, Comparators.EmailWinnerComparator),
-                emailServiceConfigProperties);
-    }
-
-    private EmailService(PriorityBlockingQueue<AdiClubMemberInfoDto> priorityBlockingQueue, EmailServiceConfigProperties emailServiceConfigProperties) {
-        this.priorityBlockingQueue = priorityBlockingQueue;
-        this.emailServiceConfigProperties = emailServiceConfigProperties;
+    @PostConstruct
+    public void initialize() {
+        this.priorityBlockingQueue = new PriorityBlockingQueue<>(queueSize, Comparators.EmailWinnerComparator);
     }
 
 
@@ -53,7 +48,7 @@ public class EmailService {
             AdiClubMemberInfoDto take = this.priorityBlockingQueue.take();
             MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
             parameters.add("emailAddress", take.getEmail());
-            Object block = restService.buildUrlAndSendRequest(
+            Object block = RestService.buildUrlAndSendRequest(
                     this.emailServiceConfigProperties,
                     parameters,
                     ""

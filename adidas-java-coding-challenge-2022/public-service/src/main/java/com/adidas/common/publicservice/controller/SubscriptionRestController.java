@@ -5,15 +5,12 @@ package com.adidas.common.publicservice.controller;
 import com.adidas.common.dto.AdiClubMemberInfoDto;
 import com.adidas.common.publicservice.config.AdiClubConfigProperties;
 import com.adidas.common.publicservice.config.PriorityQueueProperties;
-import com.adidas.common.service.RestService;
-import com.adidas.common.service.impl.RestServiceImpl;
+import com.adidas.common.utils.RestService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.swagger.v3.core.util.Json;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.Email;
 
@@ -40,11 +36,7 @@ public class SubscriptionRestController {
 
     private final AdiClubConfigProperties adiClubConfigProperties;
     private final PriorityQueueProperties priorityQueueProperties;
-    RestService restService = new RestServiceImpl();
 
-     void setRestService(RestService restService){
-        this.restService = restService;
-    }
 
 
 
@@ -74,7 +66,7 @@ public class SubscriptionRestController {
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.add("emailAddress", emailAddress);
         log.info("Calling Adi Club");
-        Object adiClubResponse = this.restService.buildUrlAndSendRequest(adiClubConfigProperties,
+        Object adiClubResponse = RestService.buildUrlAndSendRequest(adiClubConfigProperties,
                 queryParameters,
                 StringUtils.EMPTY);
 
@@ -82,7 +74,7 @@ public class SubscriptionRestController {
         if (adiClubMemberInfoDto != null){
             log.info("Calling priority queue");
 
-            this.restService.buildUrlAndSendRequest(priorityQueueProperties,
+            RestService.buildUrlAndSendRequest(priorityQueueProperties,
                     null,
                     adiClubMemberInfoDto);
             return ResponseEntity
