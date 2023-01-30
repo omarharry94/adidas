@@ -4,6 +4,7 @@ package com.adidas.common.service.impl;
 import com.adidas.common.config.EndpointConfigProperties;
 import com.adidas.common.exception.WebClientErrorHandler;
 import com.adidas.common.service.RestService;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,7 +19,7 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 import java.util.Optional;
 
-@Slf4j
+
 public class RestServiceImpl implements RestService {
 
     private static final WebClient webClient = WebClient.create();
