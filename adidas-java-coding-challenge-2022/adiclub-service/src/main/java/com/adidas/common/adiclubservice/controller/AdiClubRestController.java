@@ -21,11 +21,9 @@ public class AdiClubRestController {
   @GetMapping
   public ResponseEntity<AdiClubMemberInfoDto> getAdiClubMemberInfo(
       @RequestParam(value = "emailAddress") final String emailAddress) {
-    int randomEvenOrOdd = RANDOM.nextInt(RANDOM_MAX);
-    if ((randomEvenOrOdd % 2) == 0){
+
       return sendAdiClubMemberInfoDtoResponseEntity(emailAddress);
-    }
-    return setNotFoundAdiClubMemberInfoDtoResponseEntity();
+
 
   }
 

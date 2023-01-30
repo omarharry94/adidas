@@ -4,7 +4,13 @@ package com.adidas.common.publicservice.controller;
 
 import com.adidas.common.dto.AdiClubMemberInfoDto;
 import com.adidas.common.publicservice.config.AdiClubConfigProperties;
+import com.adidas.common.publicservice.config.PriorityQueueProperties;
 import com.adidas.common.service.RestService;
+import com.adidas.common.service.impl.RestServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.swagger.v3.core.util.Json;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +34,8 @@ public class SubscriptionRestController {
 
 
     private final AdiClubConfigProperties adiClubConfigProperties;
-    private final RestService restService;
+    private final PriorityQueueProperties priorityQueueProperties;
+    private static RestService restService = new RestServiceImpl();
 
     /**
      * Adds new email belonging to an adiclub member to the priority service queue
@@ -42,14 +49,23 @@ public class SubscriptionRestController {
     @PostMapping
     public ResponseEntity<String> addSubscriberToQueue(@RequestParam("emailAddress") @Email String emailAddress) {
 
+        ObjectMapper oMapper = JsonMapper.builder()
+                .addModule(new JavaTimeModule())
+                .build();
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.add("emailAddress", emailAddress);
         Mono<Object> adiClubResponse = restService.buildUrlAndSendRequest(adiClubConfigProperties,
                 queryParameters,
                 StringUtils.EMPTY);
 
-        AdiClubMemberInfoDto adiClubMemberInfoDto = (AdiClubMemberInfoDto) adiClubResponse.block();
+        AdiClubMemberInfoDto adiClubMemberInfoDto = oMapper.convertValue(adiClubResponse.block(), AdiClubMemberInfoDto.class);
+        if (adiClubMemberInfoDto != null){
+            Mono<Object> priorityQueueResponse = restService.buildUrlAndSendRequest(priorityQueueProperties,
+                    null,
+                    Json.pretty(adiClubMemberInfoDto));
 
+            adiClubResponse.block();
+        }
         return ResponseEntity
                 .ok()
                 .body("");

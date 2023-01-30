@@ -6,6 +6,7 @@ import com.adidas.common.prioritysaleservice.config.EmailServiceConfigProperties
 import com.adidas.common.prioritysaleservice.service.EmailService;
 import com.adidas.common.service.RestService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,6 +18,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @RestController
+@RequestMapping("/addUserToQueue")
 @RequiredArgsConstructor
 public class PrioritySaleController {
 
