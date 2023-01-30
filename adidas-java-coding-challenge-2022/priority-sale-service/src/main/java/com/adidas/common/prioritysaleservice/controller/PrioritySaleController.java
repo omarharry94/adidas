@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
+@Slf4j
 @RestController
 @RequestMapping("/addUserToQueue")
 @RequiredArgsConstructor
@@ -28,9 +28,11 @@ public class PrioritySaleController {
 
     @PostMapping
     public ResponseEntity<String> addUserToQueue(@RequestBody final AdiClubMemberInfoDto adiClubMemberInfoDto) {
+        String message = "Putting email in queue of: ";
+        log.info(message +  String.valueOf(adiClubMemberInfoDto));
         this.emailService.putEmailJob(adiClubMemberInfoDto);
         return ResponseEntity
                 .ok()
-                .body("");
+                .build();
     }
 }

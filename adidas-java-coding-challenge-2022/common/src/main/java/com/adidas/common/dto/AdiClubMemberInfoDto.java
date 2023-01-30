@@ -7,6 +7,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @Builder
+@ToString()
 public class AdiClubMemberInfoDto {
   private String email;
   private Integer points;

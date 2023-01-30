@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
 public interface RestService {
     public Mono<Object> buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
                                                MultiValueMap<String, String> queryParameters,
-                                               String body);
+                                               Object body);
 }

@@ -26,7 +26,7 @@ public class RestServiceImpl implements RestService {
 
     public Mono<Object> buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
                                                MultiValueMap<String, String> queryParameters,
-                                               String body) {
+                                               Object body) {
         URI endpointUrl = UriComponentsBuilder
                 .fromPath(endpointConfigProperties.getPath())
                 .uri(URI.create(endpointConfigProperties.getUrl()))

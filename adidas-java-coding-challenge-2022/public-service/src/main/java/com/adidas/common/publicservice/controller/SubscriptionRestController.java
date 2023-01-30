@@ -13,6 +13,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.swagger.v3.core.util.Json;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,7 +26,7 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.Email;
 
-
+@Slf4j
 @RestController
 @RequestMapping(value = "/subscription")
 @RequiredArgsConstructor
@@ -54,17 +55,18 @@ public class SubscriptionRestController {
                 .build();
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.add("emailAddress", emailAddress);
+        log.info("Calling Adi Club");
         Mono<Object> adiClubResponse = restService.buildUrlAndSendRequest(adiClubConfigProperties,
                 queryParameters,
                 StringUtils.EMPTY);
 
         AdiClubMemberInfoDto adiClubMemberInfoDto = oMapper.convertValue(adiClubResponse.block(), AdiClubMemberInfoDto.class);
         if (adiClubMemberInfoDto != null){
-            Mono<Object> priorityQueueResponse = restService.buildUrlAndSendRequest(priorityQueueProperties,
-                    null,
-                    Json.pretty(adiClubMemberInfoDto));
+            log.info("Calling priority queue");
 
-            adiClubResponse.block();
+            restService.buildUrlAndSendRequest(priorityQueueProperties,
+                    null,
+                    adiClubMemberInfoDto).block();
         }
         return ResponseEntity
                 .ok()
