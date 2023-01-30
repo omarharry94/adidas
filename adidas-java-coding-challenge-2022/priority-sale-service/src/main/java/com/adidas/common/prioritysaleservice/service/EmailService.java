@@ -18,6 +18,10 @@ import org.springframework.util.MultiValueMap;
 import javax.annotation.PostConstruct;
 import java.util.concurrent.PriorityBlockingQueue;
 
+/**
+ * Used to :
+ *           1. send email request
+ */
 @Slf4j
 @Component
 @EnableAsync
@@ -40,6 +44,9 @@ public class EmailService {
         this.priorityBlockingQueue.put(emailJob);
     }
 
+    /**
+     * @throws InterruptedException when cannot take element from priority queue
+     */
     @Scheduled(cron = "${interval-in-cron}")
     @Async
     public void sendEmailToWinner() throws InterruptedException {
@@ -53,6 +60,9 @@ public class EmailService {
                     parameters,
                     ""
             );
+            log.info("Email request sent with: " + take);
+        } else {
+            log.info("Email queue is empty, maybe next time.");
         }
 
     }
