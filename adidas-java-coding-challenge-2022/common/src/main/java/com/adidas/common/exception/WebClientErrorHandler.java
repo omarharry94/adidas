@@ -7,6 +7,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
+
+/**
+ * A web client error handler
+ *
+ * @author omar.bakhtaoui
+ */
 public class WebClientErrorHandler {
     /**
      * Handle web error with more detail and without custom messages

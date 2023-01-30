@@ -5,6 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+/**
+ * Dummy controller to simulate email sending
+ *
+ * @author omar.bakhtaoui
+ */
 @Slf4j
 @RestController
 @RequestMapping(value = "/dummyEmail")

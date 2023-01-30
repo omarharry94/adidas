@@ -4,7 +4,11 @@ import org.springframework.core.NestedRuntimeException;
 import org.springframework.http.HttpStatus;
 
 
-
+/**
+ * Object used to handle runtime exception
+ *
+ * @author omar.bakhtaoui
+ */
 public class ServiceClientException extends NestedRuntimeException {
     private final HttpStatus status;
 

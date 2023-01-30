@@ -9,8 +9,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
 /**
- * Endpoint configuration property class
+ * Endpoint configuration properties
+ *
+ * @author omar.bakhtaoui
  */
+
 @Getter
 @Setter
 @RequiredArgsConstructor

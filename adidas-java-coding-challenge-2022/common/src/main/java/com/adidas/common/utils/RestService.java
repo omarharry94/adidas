@@ -16,11 +16,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.Optional;
 
+/**
+ * Object used to execute any endpoint call with given data
+ *
+ * @author omar.bakhtaoui
+ */
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class RestService {
 
     private static final WebClient webClient = WebClient.create();
 
+    /**
+     * @param endpointConfigProperties properties to call endpoint
+     * @param queryParameters query parameters for endpoint call
+     * @param body body request for endpoint call
+     * @return Result of calling endpoint with given arguments
+     *
+     * @author omar.bakhtaoui
+     */
     public static Object buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
                                                MultiValueMap<String, String> queryParameters,
                                                Object body) {
