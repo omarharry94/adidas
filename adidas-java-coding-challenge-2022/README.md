@@ -32,6 +32,10 @@ Please, do not make strict assumptions about the execution order or time of the 
 
 ![Subscription functionality](https://user-images.githubusercontent.com/5638405/204595709-a1802e67-0ded-4139-9eae-f988a9da954d.png)
 
+
+![Subscription functionality used alternative](https://github.com/omarharry94/adidas/blob/main/adidas-java-coding-challenge-2022/SubscriptionAlternative.png)
+
+
 ![Email delivery functionality](https://user-images.githubusercontent.com/5638405/204595722-8efda463-fa95-4e15-b873-d838bb9beaf9.png)
 
 
