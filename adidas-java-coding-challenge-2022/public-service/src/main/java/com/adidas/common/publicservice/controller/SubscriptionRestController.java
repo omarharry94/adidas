@@ -11,6 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.swagger.v3.core.util.Json;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +35,12 @@ import javax.validation.constraints.Email;
 @RestController
 @RequestMapping(value = "/subscription")
 @RequiredArgsConstructor
-@SuppressWarnings("rawtypes")
 public class SubscriptionRestController {
 
 
     private final AdiClubConfigProperties adiClubConfigProperties;
     private final PriorityQueueProperties priorityQueueProperties;
-    private static RestService restService = new RestServiceImpl();
+    private final static RestService restService = new RestServiceImpl();
 
     /**
      * Adds new email belonging to an adiclub member to the priority service queue
@@ -47,6 +51,14 @@ public class SubscriptionRestController {
      *         404(Not found) when the subscriber does not exist in adiclub
      *         409(Already exists) when the subscriber already exits in the queue
      */
+    @Operation(summary = "Adds an Adi Member to send win email ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the adiMember and queued",
+                            content = @Content),
+            @ApiResponse(responseCode = "409", description = "Already existing in queue",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Adi Member not found",
+                    content = @Content) })
     @PostMapping
     public ResponseEntity<String> addSubscriberToQueue(@RequestParam("emailAddress") @Email String emailAddress) {
 
