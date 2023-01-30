@@ -20,8 +20,6 @@ class PrioritySaleControllerTest {
 
     @Test
     void addUserToQueue() {
-
-
         Mockito.doNothing().when(emailService).putEmailJob(Mockito.any(AdiClubMemberInfoDto.class));
         ResponseEntity<String> stringResponseEntity = prioritySaleController.addUserToQueue(AdiClubMemberInfoDto.builder()
                 .email("email@test.com")

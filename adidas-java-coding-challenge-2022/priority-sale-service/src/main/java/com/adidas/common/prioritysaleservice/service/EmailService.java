@@ -57,7 +57,7 @@ public class EmailService {
                     this.emailServiceConfigProperties,
                     parameters,
                     ""
-            ).block();
+            );
         }
 
     }

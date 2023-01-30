@@ -14,7 +14,7 @@ public class DummyEmailRestController {
 
   @PostMapping
   public ResponseEntity<String> getDummyEndpointResponse(@RequestParam String emailAddress) {
-    log.info("sending email");
+    log.info("sending email to " + emailAddress);
     return ResponseEntity
             .ok()
             .build();

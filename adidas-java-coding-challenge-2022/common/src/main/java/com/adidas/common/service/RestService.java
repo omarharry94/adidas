@@ -6,7 +6,7 @@ import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Mono;
 
 public interface RestService {
-    public Mono<Object> buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
+    public Object buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
                                                MultiValueMap<String, String> queryParameters,
                                                Object body);
 }

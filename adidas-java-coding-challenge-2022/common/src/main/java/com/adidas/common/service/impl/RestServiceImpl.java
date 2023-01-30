@@ -24,7 +24,7 @@ public class RestServiceImpl implements RestService {
 
     private static final WebClient webClient = WebClient.create();
 
-    public Mono<Object> buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
+    public Object buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
                                                MultiValueMap<String, String> queryParameters,
                                                Object body) {
         URI endpointUrl = UriComponentsBuilder
@@ -48,7 +48,8 @@ public class RestServiceImpl implements RestService {
                 : request.body(BodyInserters.fromValue(body)).retrieve();
         return retrieve
                 .onStatus(HttpStatus::isError, WebClientErrorHandler::manageError)
-                .bodyToMono(Object.class);
+                .bodyToMono(Object.class)
+                .block();
     }
 
 

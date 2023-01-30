@@ -40,7 +40,13 @@ public class SubscriptionRestController {
 
     private final AdiClubConfigProperties adiClubConfigProperties;
     private final PriorityQueueProperties priorityQueueProperties;
-    private final static RestService restService = new RestServiceImpl();
+    RestService restService = new RestServiceImpl();
+
+     void setRestService(RestService restService){
+        this.restService = restService;
+    }
+
+
 
     /**
      * Adds new email belonging to an adiclub member to the priority service queue
@@ -68,21 +74,23 @@ public class SubscriptionRestController {
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.add("emailAddress", emailAddress);
         log.info("Calling Adi Club");
-        Mono<Object> adiClubResponse = restService.buildUrlAndSendRequest(adiClubConfigProperties,
+        Object adiClubResponse = this.restService.buildUrlAndSendRequest(adiClubConfigProperties,
                 queryParameters,
                 StringUtils.EMPTY);
 
-        AdiClubMemberInfoDto adiClubMemberInfoDto = oMapper.convertValue(adiClubResponse.block(), AdiClubMemberInfoDto.class);
+        AdiClubMemberInfoDto adiClubMemberInfoDto = oMapper.convertValue(adiClubResponse, AdiClubMemberInfoDto.class);
         if (adiClubMemberInfoDto != null){
             log.info("Calling priority queue");
 
-            restService.buildUrlAndSendRequest(priorityQueueProperties,
+            this.restService.buildUrlAndSendRequest(priorityQueueProperties,
                     null,
-                    adiClubMemberInfoDto).block();
+                    adiClubMemberInfoDto);
+            return ResponseEntity
+                    .ok()
+                    .build();
         }
-        return ResponseEntity
-                .ok()
-                .body("");
+        return ResponseEntity.notFound().build();
+
     }
 
 
