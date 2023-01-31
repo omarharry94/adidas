@@ -2,10 +2,13 @@ package com.adidas.common.publicservice.controller;
 
 
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
+
 import com.adidas.common.publicservice.config.AdiClubConfigProperties;
 import com.adidas.common.publicservice.config.PriorityQueueProperties;
-import com.adidas.common.utils.RestService;
+
+import com.adidas.common.publicservice.dto.AdiClubMemberInfoDto;
+import com.adidas.common.publicservice.utils.RestService;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

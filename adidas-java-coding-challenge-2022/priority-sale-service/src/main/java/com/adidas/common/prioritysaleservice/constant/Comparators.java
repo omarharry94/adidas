@@ -1,6 +1,7 @@
 package com.adidas.common.prioritysaleservice.constant;
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
+
+import com.adidas.common.prioritysaleservice.dto.AdiClubMemberInfoDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

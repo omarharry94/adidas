@@ -1,10 +1,12 @@
 package com.adidas.common.prioritysaleservice.service;
 
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
+
 import com.adidas.common.prioritysaleservice.config.EmailServiceConfigProperties;
 import com.adidas.common.prioritysaleservice.constant.Comparators;
-import com.adidas.common.utils.RestService;
+import com.adidas.common.prioritysaleservice.dto.AdiClubMemberInfoDto;
+import com.adidas.common.prioritysaleservice.utils.RestService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

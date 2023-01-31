@@ -1,6 +1,6 @@
 package com.adidas.common.adiclubservice;
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
+import com.adidas.common.adiclubservice.dto.AdiClubMemberInfoDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

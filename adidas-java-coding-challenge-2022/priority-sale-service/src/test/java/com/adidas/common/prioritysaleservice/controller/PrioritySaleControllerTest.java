@@ -1,6 +1,7 @@
 package com.adidas.common.prioritysaleservice.controller;
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
+
+import com.adidas.common.prioritysaleservice.dto.AdiClubMemberInfoDto;
 import com.adidas.common.prioritysaleservice.service.EmailService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

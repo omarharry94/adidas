@@ -1,9 +1,9 @@
 package com.adidas.common.publicservice.controller;
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
 import com.adidas.common.publicservice.config.AdiClubConfigProperties;
 import com.adidas.common.publicservice.config.PriorityQueueProperties;
-import com.adidas.common.utils.RestService;
+import com.adidas.common.publicservice.dto.AdiClubMemberInfoDto;
+import com.adidas.common.publicservice.utils.RestService;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

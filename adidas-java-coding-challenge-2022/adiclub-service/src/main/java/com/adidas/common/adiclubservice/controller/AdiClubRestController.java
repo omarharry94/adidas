@@ -1,6 +1,12 @@
 package com.adidas.common.adiclubservice.controller;
 
-import com.adidas.common.dto.AdiClubMemberInfoDto;
+
+
+
+
+
+
+import com.adidas.common.adiclubservice.dto.AdiClubMemberInfoDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

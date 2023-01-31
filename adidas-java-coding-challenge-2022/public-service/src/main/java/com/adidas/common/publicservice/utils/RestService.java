@@ -1,8 +1,8 @@
-package com.adidas.common.utils;
+package com.adidas.common.publicservice.utils;
 
 
-import com.adidas.common.config.EndpointConfigProperties;
-import com.adidas.common.exception.WebClientErrorHandler;
+import com.adidas.common.publicservice.config.EndpointConfigProperties;
+import com.adidas.common.publicservice.exception.WebClientErrorHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -35,8 +35,8 @@ public class RestService {
      * @author omar.bakhtaoui
      */
     public static Object buildUrlAndSendRequest(EndpointConfigProperties endpointConfigProperties,
-                                               MultiValueMap<String, String> queryParameters,
-                                               Object body) {
+                                                MultiValueMap<String, String> queryParameters,
+                                                Object body) {
         URI endpointUrl = UriComponentsBuilder
                 .fromPath(endpointConfigProperties.getPath())
                 .uri(URI.create(endpointConfigProperties.getUrl()))
