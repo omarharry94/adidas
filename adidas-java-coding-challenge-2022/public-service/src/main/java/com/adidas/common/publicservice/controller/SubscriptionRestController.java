@@ -68,14 +68,14 @@ public class SubscriptionRestController {
                 .build();
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.add("emailAddress", emailAddress);
-        log.info("Calling Adi Club");
+        log.info("Calling Adi Club with: " + adiClubConfigProperties.toString());
         Object adiClubResponse = RestService.buildUrlAndSendRequest(adiClubConfigProperties,
                 queryParameters,
                 StringUtils.EMPTY);
 
         AdiClubMemberInfoDto adiClubMemberInfoDto = oMapper.convertValue(adiClubResponse, AdiClubMemberInfoDto.class);
         if (adiClubMemberInfoDto != null){
-            log.info("Calling priority queue");
+            log.info("Calling priority queue with: " + priorityQueueProperties.toString());
 
             RestService.buildUrlAndSendRequest(priorityQueueProperties,
                     null,

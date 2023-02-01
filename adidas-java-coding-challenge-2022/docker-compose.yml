@@ -9,15 +9,23 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+
+    environment:
+      - PRIORITY_SALE_SERVICE_URL=http://priority-sale-service:8082
+      - ADI_CLUB_SERVICE_URL=http://adi-club-service:8081
     links:
       - "priority-sale-service"
 
   priority-sale-service:
     image: localhost/adidas-be-challenge-prioritysaleservice:latest
     container_name: adidas-be-challenge-prioritysaleservice
+    environment:
+      - EMAIL_SERVICE_URL=http://email-service:8083
     build:
       context: priority-sale-service
       dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
     links:
       - "adi-club-service"
       - "email-service"
@@ -28,6 +36,8 @@ services:
     build:
       context: adiclub-service
       dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
 
   email-service:
     image: localhost/adidas-be-challenge-emailservice:latest
@@ -35,3 +45,5 @@ services:
     build:
       context: email-service
       dockerfile: Dockerfile
+    ports:
+      - "8083:8083"

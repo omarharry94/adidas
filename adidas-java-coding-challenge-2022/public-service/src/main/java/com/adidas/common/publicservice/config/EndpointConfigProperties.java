@@ -1,10 +1,7 @@
 package com.adidas.common.publicservice.config;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
@@ -14,6 +11,7 @@ import org.springframework.http.HttpMethod;
  * @author omar.bakhtaoui
  */
 
+@ToString
 @Getter
 @Setter
 @RequiredArgsConstructor
