@@ -43,11 +43,6 @@ pipeline {
         }			                      
       }
     }	
-    stage('War rename') {
-	  steps {
-		  	sh 'mv target/*.war target/helloworld.war'
-        }			                      
-      }
     stage('SonarQube_Analysis') {
       steps {
 	    script {
@@ -65,25 +60,46 @@ pipeline {
         }
       }
     }
-  stage('Build Docker Image'){
-    steps{
-      sh 'docker build -t dileep95/ansibledeploy:${DOCKER_TAG} .'
-    }
-  }	  	 
-  stage('Docker Container'){
-    steps{
-      withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
-	  sh 'docker login -u ${docker_user} -p ${docker_pass}'
-      	  sh 'docker push dileep95/ansibledeploy:${DOCKER_TAG}'
-	  }
-    }
- }
-    stage('Ansible Playbook'){
+    stage('Build Docker Image'){
       steps {
-       //ansiblePlaybook credentialsId: 'ans-server', inventory: 'inventory', playbook: 'ansibleplay.yml', tags: 'stop_container,delete_container'
-       // Above command used to run the playbook with specified tags mentioned in the tags section.	
-	 ansiblePlaybook credentialsId: 'ans-server', inventory: 'inventory', playbook: 'ansibleplay.yml'     
+        sh 'docker build . -t dileep95/spring:${DOCKER_TAG}'
         }
-      }	  	  
+      }  
+     stage('Docker Push'){
+       steps{
+       withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
+       	  sh 'docker login -u ${docker_user} -p ${docker_pass}'
+          sh 'docker push dileep95/spring:${DOCKER_TAG}'
+        }
+      }
+    }    	
+    stage('ssh'){
+	steps{
+              sh "chmod +x replace.sh"
+	      sh "./replace.sh ${DOCKER_TAG}"
+                sshagent(['k8s']) {	      
+		   sh "scp -o StrictHostKeyChecking=no services.yml changed-deploy.yml services.yml prithdileep@35.223.202.172:/home/prithdileep"
+		script{
+			sh "ssh prithdileep@35.223.202.172 kubectl delete all --all"
+		try{
+		  sh "ssh prithdileep@35.223.202.172 kubectl create -f ."
+		  }
+		catch(error){
+		sh "ssh prithdileep@35.223.202.172 kubectl apply -f ."
+            }
+        }
+    }
+   }
+  } 
+	}
+post {
+    always {
+sh 'echo "This will always run"'
+mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br>URL: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Success: Project name -> ${env.JOB_NAME}", to: "prithdileep@gmail.com";
+    }
+    failure {
+sh 'echo "This will run only if failed"'
+      mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br>URL: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR: Project name -> ${env.JOB_NAME}", to: "prithdileep@gmail.com";
+    }
   }
-}  
+}
