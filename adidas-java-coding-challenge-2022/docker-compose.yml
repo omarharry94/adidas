@@ -23,6 +23,8 @@ services:
     container_name: adidas-be-challenge-prioritysaleservice
     environment:
       - EMAIL_SERVICE_URL=http://email-service:8083
+      - CRON_FOR_WINNER_EMAIL_SENDING=0 * * ? * *
+      - QUEUE_SIZE_FOR_WINNER_EMAIL_SENDING=15
     build:
       context: priority-sale-service
       dockerfile: Dockerfile

@@ -5,15 +5,11 @@ import com.adidas.common.prioritysaleservice.dto.AdiClubMemberInfoDto;
 import com.adidas.common.prioritysaleservice.service.EmailService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.Instant;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PrioritySaleControllerTest {
     EmailService emailService = Mockito.mock(EmailService.class);

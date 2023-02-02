@@ -24,7 +24,7 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class RestService {
 
-    private static final WebClient webClient = WebClient.create();
+    static WebClient webClient = WebClient.create();
 
     /**
      * @param endpointConfigProperties properties to call endpoint
