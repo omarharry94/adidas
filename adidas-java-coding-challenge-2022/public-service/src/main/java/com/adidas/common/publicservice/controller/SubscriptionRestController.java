@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Email;
 
+/**
+ * RestController that handles adding new email addresses to the priority service queue.
+ *
+ * @author  oamr.bakhtaoui
+ */
 @Slf4j
 @RestController
 @RequestMapping(value = "/subscription")
@@ -36,24 +41,30 @@ public class SubscriptionRestController {
     private final PriorityQueueProperties priorityQueueProperties;
 
 
-
-
     /**
-     * Adds new email belonging to an adiclub member to the priority service queue
+     * This is a Rest controller written in Java that implements a subscription endpoint.
+     * When the endpoint is called with an email address as a query parameter, the code makes
+     * a call to the adidas Club API to retrieve information about the member with the given
+     * email. If the member is found, the code then sends the member's information to the priority
+     * queue service. If the member is not found in the adidas Club API, the endpoint returns a 404
+     * Not Found response. If the call to the priority queue service is successful
+     * , the endpoint returns a 200 OK response.
+     *
+     * @author omar.bakhtaoui
      *
      *
      * @param emailAddress email address needed for subscription
      * @return 201(Created) when the subscription takes place successfully
-     *         404(Not found) when the subscriber does not exist in adiclub
+     *         404(Not found) when the subscriber does not exist in AdiClub
      *         409(Already exists) when the subscriber already exits in the queue
      */
-    @Operation(summary = "Adds an Adi Member to send win email ")
+    @Operation(summary = "Adds an Adi Member to the priority queue for sending win emails")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the adiMember and queued",
-                            content = @Content),
-            @ApiResponse(responseCode = "409", description = "Already existing in queue",
+            @ApiResponse(responseCode = "200", description = "Adi member found and added to the queue successfully",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Adi Member not found",
+            @ApiResponse(responseCode = "409", description = "Adi member already exists in the queue",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Adi member not found",
                     content = @Content) })
     @PostMapping
     public ResponseEntity<String> addSubscriberToQueue(@RequestParam("emailAddress") @Email String emailAddress) {
