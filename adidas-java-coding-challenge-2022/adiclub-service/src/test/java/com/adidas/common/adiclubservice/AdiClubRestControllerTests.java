@@ -1,5 +1,6 @@
 package com.adidas.common.adiclubservice;
 
+import com.adidas.common.adiclubservice.controller.AdiClubRestController;
 import com.adidas.common.adiclubservice.dto.AdiClubMemberInfoDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Instant;
 import java.util.Objects;
-
-import com.adidas.common.adiclubservice.controller.AdiClubRestController;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = AdiClubRestController.class)

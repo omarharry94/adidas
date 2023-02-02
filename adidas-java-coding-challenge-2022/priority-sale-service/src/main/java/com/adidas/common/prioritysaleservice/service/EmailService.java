@@ -1,12 +1,10 @@
 package com.adidas.common.prioritysaleservice.service;
 
 
-
 import com.adidas.common.prioritysaleservice.config.EmailServiceConfigProperties;
 import com.adidas.common.prioritysaleservice.constant.Comparators;
 import com.adidas.common.prioritysaleservice.dto.AdiClubMemberInfoDto;
 import com.adidas.common.prioritysaleservice.utils.RestService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +32,7 @@ public class EmailService {
 
     private PriorityBlockingQueue<AdiClubMemberInfoDto> priorityBlockingQueue;
     @Value("${spring.async.queue-capacity}")
-    private int queueSize;
+    int queueSize;
 
     @PostConstruct
     public void initialize() {
@@ -49,7 +47,7 @@ public class EmailService {
     /**
      * @throws InterruptedException when cannot take element from priority queue
      */
-    @Scheduled(cron = "${interval-in-cron}")
+    @Scheduled(cron = "${cron_for_winner_email_sending}")
     @Async
     public void sendEmailToWinner() throws InterruptedException {
         if (!priorityBlockingQueue.isEmpty()){

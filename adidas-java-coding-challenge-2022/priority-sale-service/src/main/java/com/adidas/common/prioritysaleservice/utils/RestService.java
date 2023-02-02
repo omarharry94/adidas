@@ -21,10 +21,10 @@ import java.util.Optional;
  *
  * @author omar.bakhtaoui
  */
-@NoArgsConstructor(access = AccessLevel.NONE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class RestService {
 
-    private static final WebClient webClient = WebClient.create();
+    static WebClient webClient = WebClient.create();
 
     /**
      * @param endpointConfigProperties properties to call endpoint

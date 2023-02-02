@@ -1,14 +1,10 @@
 package com.adidas.common.publicservice.controller;
 
 
-
-
 import com.adidas.common.publicservice.config.AdiClubConfigProperties;
 import com.adidas.common.publicservice.config.PriorityQueueProperties;
-
 import com.adidas.common.publicservice.dto.AdiClubMemberInfoDto;
 import com.adidas.common.publicservice.utils.RestService;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -17,7 +13,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;

@@ -7,6 +7,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString()
 public class AdiClubMemberInfoDto {
@@ -14,9 +15,4 @@ public class AdiClubMemberInfoDto {
   private Integer points;
   private Instant registrationDate;
 
-  public AdiClubMemberInfoDto(String email, Integer points, Instant registrationDate) {
-    this.email = email;
-    this.points = points;
-    this.registrationDate = registrationDate;
-  }
 }
